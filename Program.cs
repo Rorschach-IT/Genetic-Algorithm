@@ -88,6 +88,7 @@ namespace Genetic_Algorithm
             /* 
                 Main algorithm loop
             */
+            double[] tempArray = new double[iterationCounter];
             for (int i = 0; i < iterationCounter; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -97,6 +98,7 @@ namespace Genetic_Algorithm
                 int[][] newPopulation = new int[numberOfSubjects][];
 
                 double averageFitness = Functions.CalculateAverageFitness(population);
+                tempArray[i] = Functions.CalculateAverageFitness(population);
                 int uniqueIndividuals = Functions.CountUniqueIndividuals(population);
 
                 Console.Write("Average fitness: ");
@@ -139,6 +141,11 @@ namespace Genetic_Algorithm
                 population = newPopulation;
 
                 PrintPopulation(population);
+            }
+
+            foreach (var item in tempArray)
+            {
+                Console.Write(item + " | ");
             }
 
             Console.ForegroundColor = ConsoleColor.Red;

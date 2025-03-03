@@ -5,6 +5,32 @@ namespace Genetic_Algorithm
 {
     internal class Program
     {
+        // User must enter three positive integers
+        static int GetValidatedInput(string prompt, ConsoleColor promptColor = ConsoleColor.Blue)
+        {
+            int value;
+
+            while (true)
+            {
+                Console.ForegroundColor = promptColor;
+                Console.WriteLine(prompt);
+                Console.ForegroundColor = ConsoleColor.White;
+
+                if (!int.TryParse(Console.ReadLine(), out value) || value <= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input! Please enter a positive integer.");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ResetColor();
+                    return value;
+                }
+            }
+        }
+
+        // Print current population
         static void PrintPopulation(int[][] population)
         {
             for (int i = 0; i < population.Length; i++)
@@ -23,11 +49,15 @@ namespace Genetic_Algorithm
 
         static void Main(string[] args)
         {
+            Console.Title = "Genetic Algorithm";
+
             Random random = new Random();
 
-            const int numberOfPositions = 10; // The number of genes in the individual
-            const int numberOfSubjects = 8; // Number of individuals in the population
-            const int iterationCounter = 6; // Number of full algorithm iterations
+            int numberOfPositions = GetValidatedInput("Enter number of positions: ");
+            int numberOfSubjects = GetValidatedInput("Enter number of subjects: ");
+            int iterationCounter = GetValidatedInput("Enter number of iterations of the algorithm: ");
+
+            Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("-------------------------------");
@@ -112,14 +142,9 @@ namespace Genetic_Algorithm
             }
 
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\n\nEnd of algorithm, press any key.");
+            Console.WriteLine("\n\nEnd of algorithm, press any key...");
             Console.ResetColor();
             Console.ReadKey();
         }
     }
 }
-
-/*
-    TO DO:
-    - add inputs for main three values with validation
-*/
